@@ -1,8 +1,8 @@
 import pandas as pd
 
-nomeCandidato = input("Digite o nome do candidato: ").strip()
-nome_arquivo = nomeCandidato + ".csv"
-csv_final = "csv_final.csv"
+nomeAvaliador = input("Digite o nome do avaliador: ").strip()
+nome_arquivo = nomeAvaliador + ".csv"
+csv_final_avaliador = "csv_final_avaliador.csv"
 
 horarios_completos = [
     "07:30 - 08:20", "08:20 - 09:10", "09:20 - 10:10", "10:10 - 11:00",
@@ -13,7 +13,7 @@ horarios_completos = [
 
 colunas_esperadas = ["Horários", "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]
 
-# Carregar CSV do candidato
+# Carregar CSV do avaliador
 df = pd.read_csv(nome_arquivo)
 df = df[colunas_esperadas]
 
@@ -23,23 +23,23 @@ df = pd.merge(df_completo, df, on="Horários", how="left")
 for col in colunas_esperadas[1:]:
     df[col] = df[col].fillna("---")
 
-# Salvar CSV do candidato atualizado
+# Salvar CSV do avaliador atualizado
 df.to_csv(nome_arquivo, index=False)
 
-# Atualizar csv_final
-df_final = pd.read_csv(csv_final)
+# Atualizar csv_final_avaliador
+df_final = pd.read_csv(csv_final_avaliador)
 
 for col in colunas_esperadas[1:]:
     for idx, valor in enumerate(df[col]):
         if valor.strip() == "---":
             atual = str(df_final.at[idx, col]).strip()
             if atual == "---" or atual == "":
-                df_final.at[idx, col] = nomeCandidato
+                df_final.at[idx, col] = nomeAvaliador
             else:
-                if nomeCandidato not in atual.split("\n"):
-                    df_final.at[idx, col] = atual + "\n" + nomeCandidato
+                if nomeAvaliador not in atual.split("\n"):
+                    df_final.at[idx, col] = atual + "\n" + nomeAvaliador
 
-# Salvar csv_final atualizado
-df_final.to_csv(csv_final, index=False)
+# Salvar csv_final_avaliador atualizado
+df_final.to_csv(csv_final_avaliador, index=False)
 
-print(f"Candidato '{nomeCandidato}' adicionado ao csv_final com quebra de linha.")
+print(f"Avaliador '{nomeAvaliador}' adicionado ao csv_final_avaliador com quebra de linha.")

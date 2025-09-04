@@ -1,7 +1,7 @@
 import pandas as pd
 
-nomeCandidato = "AIRTON NUNES TENORIO"
-nome_arquivo = nomeCandidato + ".csv"
+nomeEntidade = ""
+nome_arquivo = nomeEntidade + ".csv"
 
 # Defina aqui a lista completa de horários que você quer no arquivo final
 horarios_completos = [
@@ -32,5 +32,3 @@ for col in colunas_esperadas[1:]:
 
 # Salvar o CSV completo
 df.to_csv(nome_arquivo, index=False)
-
-
